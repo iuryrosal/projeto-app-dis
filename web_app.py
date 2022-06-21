@@ -1,4 +1,10 @@
 import streamlit as st
+from sqs_service import SQSService
+import os
+import json
+
+sqs = SQSService()
+sqs_url = 'http://localhost:4566/000000000000/sqs_requisicoes'
 
 st.title("Ingestão de Dados do Airbnb")
 name = st.text_input("Responsável pela Ingestão")
@@ -8,12 +14,12 @@ location = st.selectbox(label="Localidade", options=["Fortaleza", "Cumbuca", "Be
 confirm = st.button("Solicitar Ingestão")
 
 if confirm:
-  payload = {
+  payload = json.dumps({
     "name": name,
-    "check_in": date_check_in,
-    "check_out": date_check_out,
+    "check_in": str(date_check_in),
+    "check_out": str(date_check_out),
     "localizacao": location
-  }
+  })
 
   # Envia payload para a lambda
-  #############################
+  sqs.send_message(sqs_url, payload)

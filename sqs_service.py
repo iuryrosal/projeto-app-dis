@@ -4,7 +4,7 @@ import os
 
 AWS_REGION = 'us-east-1'
 AWS_PROFILE = 'localstack'
-ENDPOINT_URL = os.environ.get('LOCALSTACK_ENDPOINT_URL')
+ENDPOINT_URL = 'http://localhost.localstack.cloud:4566/'
 
 boto3.setup_default_session(profile_name=AWS_PROFILE)
 
